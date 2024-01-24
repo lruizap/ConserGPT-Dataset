@@ -15,6 +15,6 @@ def process_pdf(link_pdf):
     except PdfReadError as e:
         error_message = f"Error reading PDF ({link_pdf}): {e}"
         print(error_message)
-        with open("./out/logs.txt", "a", encoding="utf-8") as logs_file:
+        with open("../out/logs.txt", "a", encoding="utf-8") as logs_file:
             logs_file.write(error_message + "\n")
         return None

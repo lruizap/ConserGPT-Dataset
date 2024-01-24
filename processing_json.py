@@ -24,11 +24,16 @@ def process_modules(data):
                     link_pdf = link_pdf.lower()
 
                     if link_pdf.endswith('.pdf'):
+
                         pdf_file = process_pdf(link_pdf)
 
+                        if pdf_file is None:
+                            continue
+
                         in_appendices = False
+
                         markdown_content = process_text(
-                            pdf_file, in_appendices)
+                            pdf_file, in_appendices, link_pdf)
 
                     elif link_pdf.endswith('.htm'):
                         markdown_content = process_htm(link_pdf)
@@ -36,9 +41,12 @@ def process_modules(data):
                         # wordSearch = "Circular"
                         # if wordSearch.lower() in link_pdf.lower():
                         print(link_pdf)
-                        pdf_file = process_imagePdf(link_pdf)
+                        with open("./out/logs.txt", "a", encoding="utf-8") as logs_file:
+                            logs_file.write(link_pdf + "\n")
+                        continue
+                        # pdf_file = process_imagePdf(link_pdf)
 
-                    if pdf_file is None:
+                    if markdown_content is None:
                         continue
 
                     pdf_file.stream.close()
